@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlantForce · Sua mentoria na Salesforce</title>
+<meta name="description" content="Você está entre os 16 Jovens Sementes selecionados para o PlantForce, o programa de mentoria da Salesforce. De janeiro a abril de 2027. Confirme sua participação.">
+<meta name="theme-color" content="#F7F4EC">
+<link rel="icon" type="image/png" href="assets/broto-acenando.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/broto-acenando.png">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+/* Paleta Estufa: tokens do guia de marca PlantForce v1 */
+:root {
+  color-scheme:light;
+  --paper:#F7F4EC; --paper-deep:#EFE8DA; --paper-warm:#FBF9F3;
+  --sage:#E6EDE2; --sage-deep:#D6E0CF;
+  --ink:#1A2E22; --ink-soft:#4A5A4F; --ink-faint:#8A978C;
+  --green:#00C468; --green-vivid:#00E87A; --green-dark:#067E47; --green-deep:#064D30;
+  --terracotta:#C2663B; --terracotta-soft:#E8C9B6;
+  --terracotta-ink:#A3502A; /* terracota escurecida para texto pequeno (AA) */
+  --blue:#00A1E0; --amber:#F2A93B;
+  --line:#E4DED0;
+  --text:#112C5D; /* azul-marinho escuro: cor do texto padrão */
+  --shadow-leaf:0 1px 2px rgba(26,46,34,0.06), 0 22px 44px -24px rgba(26,46,34,0.34);
+  --ease-out:cubic-bezier(0.2,0.7,0.2,1);
+  --gutter:72px;
+}
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; scroll-padding-top:96px; }
+body {
+  font-family:'DM Sans',system-ui,sans-serif; font-optical-sizing:auto;
+  font-size:16px; line-height:1.6;
+  background:var(--paper); color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+img { display:block; max-width:100%; }
+[hidden] { display:none !important; }
+a { color:inherit; }
+button,input { font:inherit; color:inherit; }
+:focus-visible { outline:2px solid var(--green-dark); outline-offset:3px; border-radius:8px; }
+
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+.skip-link {
+  position:fixed; left:16px; top:-80px; z-index:100; padding:12px 18px; border-radius:12px;
+  background:var(--ink); color:var(--paper); font-size:14px; font-weight:600; text-decoration:none;
+}
+.skip-link:focus { top:16px; }
+
+/* Textura de papel sutil, como no guia */
+.paper-grain {
+  position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(0,120,70,0.015) 0%, transparent 40%),
+    radial-gradient(circle at 85% 70%, rgba(194,102,59,0.02) 0%, transparent 45%);
+}
+
+.wrap { position:relative; z-index:1; max-width:calc(1240px + var(--gutter) * 2); margin:0 auto; padding:0 var(--gutter); }
+
+/* ---------- Tipografia ---------- */
+.eyebrow {
+  display:flex; align-items:center; gap:10px; margin-bottom:18px;
+  font-size:13px; font-weight:500; line-height:1.3; color:var(--green-dark);
+}
+.eyebrow::before { content:''; width:20px; height:1.5px; background:currentColor; flex-shrink:0; }
+.h2 {
+  font-size:clamp(34px, 4.2vw, 52px); font-weight:600; letter-spacing:-0.05em; line-height:1.03;
+  color:var(--text); text-wrap:balance;
+}
+/* títulos usam o mesmo azul-marinho do texto */
+h2, h3, h4, .trait-v, .fact dt, .month-title { color:var(--text); }
+.body { font-size:17px; font-weight:300; line-height:1.78; color:var(--text); max-width:34em; }
+.body + .body { margin-top:16px; }
+.body strong { font-weight:600; color:var(--ink); }
+
+/* ---------- Botões (texto que rola no hover, como na referência) ---------- */
+.btn {
+  --h:52px;
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  height:var(--h); padding:0 26px; border:0; border-radius:999px; cursor:pointer;
+  font-size:15px; font-weight:600; letter-spacing:-0.01em; text-decoration:none; white-space:nowrap;
+  transition:background-color .25s, box-shadow .25s, transform .25s var(--ease-out), opacity .2s;
+}
+.btn svg { flex-shrink:0; }
+.btn-primary {
+  background:var(--green); color:var(--ink);
+  box-shadow:0 12px 26px -14px rgba(6,126,71,0.75), inset 0 -2px 0 rgba(6,77,48,0.16);
+}
+.btn-primary:hover { background:var(--green-vivid); transform:translateY(-1px); }
+.btn-primary:active { transform:translateY(0); }
+.btn-ghost { background:transparent; color:var(--ink); box-shadow:inset 0 0 0 1.5px rgba(26,46,34,0.22); }
+.btn-ghost:hover { box-shadow:inset 0 0 0 1.5px var(--ink); }
+.btn[disabled] { opacity:0.7; cursor:progress; transform:none; }
+.roll { display:inline-block; height:1.25em; line-height:1.25em; overflow:hidden; vertical-align:top; }
+.roll > span { display:block; transition:transform .5s cubic-bezier(0.7,0,0.2,1); }
+.roll > span::after { content:attr(data-text); content:attr(data-text) / ""; display:block; }
+.btn:hover .roll > span, .btn:focus-visible .roll > span { transform:translateY(-50%); }
+
+/* ---------- Navegação ---------- */
+.nav { position:fixed; top:14px; left:0; right:0; z-index:50; padding:0 24px; pointer-events:none; }
+.nav-bar {
+  pointer-events:auto; position:relative; max-width:1240px; margin:0 auto;
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:20px;
+  padding:7px 7px 7px 12px; border-radius:999px;
+  background:rgba(251,249,243,0.55); border:1px solid rgba(228,222,208,0.75);
+  -webkit-backdrop-filter:blur(14px) saturate(1.3); backdrop-filter:blur(14px) saturate(1.3);
+  transition:background-color .35s, border-color .35s, box-shadow .35s;
+}
+.nav.is-scrolled .nav-bar, .nav.is-open .nav-bar {
+  background:rgba(251,249,243,0.88); border-color:rgba(228,222,208,0.95);
+  box-shadow:0 14px 34px -22px rgba(26,46,34,0.42);
+}
+.nav-brand { justify-self:start; display:flex; align-items:center; gap:10px; padding:2px 12px 2px 2px; border-radius:999px; text-decoration:none; }
+.nav-broto {
+  height:46px; width:auto; margin:-6px 0 -4px; transform-origin:50% 85%;
+  filter:drop-shadow(0 5px 6px rgba(60,80,50,0.2)); transition:transform .5s var(--ease-out);
+}
+.nav-brand:hover .nav-broto, .nav-brand:focus-visible .nav-broto { transform:rotate(-9deg) translateY(-2px); }
+.nav-logo { height:25px; width:auto; }
+.nav-links { justify-self:center; display:flex; gap:2px; list-style:none; padding:4px; border-radius:999px; background:rgba(26,46,34,0.045); }
+.nav-links a:not(.btn) {
+  display:block; padding:8px 15px; border-radius:999px; text-decoration:none;
+  font-size:14px; font-weight:500; color:var(--ink-soft); transition:color .2s, background-color .2s, box-shadow .2s;
+}
+.nav-links a:not(.btn):hover { color:var(--ink); background:rgba(251,249,243,0.7); }
+.nav-links a[aria-current="true"] {
+  color:var(--ink); background:var(--paper-warm);
+  box-shadow:0 1px 2px rgba(26,46,34,0.08), 0 6px 14px -8px rgba(26,46,34,0.35);
+}
+.nav-menu-cta { display:none; }
+.nav-end { justify-self:end; display:flex; align-items:center; gap:6px; }
+.nav .btn { --h:44px; padding:0 22px; font-size:14px; }
+.nav-toggle {
+  display:none; width:44px; height:44px; border:0; border-radius:50%; cursor:pointer;
+  place-items:center; background:rgba(26,46,34,0.06); color:var(--ink); transition:background-color .2s;
+}
+.nav-toggle:hover { background:rgba(26,46,34,0.1); }
+.nav-toggle span { grid-area:1 / 1; width:18px; height:1.8px; border-radius:2px; background:currentColor; transition:transform .3s var(--ease-out); }
+.nav-toggle span:first-child { transform:translateY(-3.5px); }
+.nav-toggle span:last-child { transform:translateY(3.5px); }
+.nav.is-open .nav-toggle span:first-child { transform:rotate(45deg); }
+.nav.is-open .nav-toggle span:last-child { transform:rotate(-45deg); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position:relative; z-index:1; overflow:hidden;
+  min-height:100vh; min-height:100svh; display:flex; align-items:center; padding:120px 0 64px;
+  background:
+    radial-gradient(ellipse 70% 90% at 20% 45%, var(--paper-warm) 0%, transparent 60%),
+    linear-gradient(165deg, var(--sage) 0%, var(--paper) 45%, var(--paper-deep) 100%);
+}
+/* Sol de estufa: luz quente difusa no canto */
+.hero::before {
+  content:''; position:absolute; top:-10%; left:-5%; width:55%; height:70%; pointer-events:none;
+  background:radial-gradient(ellipse, rgba(255,240,200,0.5) 0%, transparent 70%);
+}
+.hero-inner { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr); align-items:center; gap:32px; width:100%; }
+.hero-logo { margin:0 0 30px; line-height:0; }
+/* bordado em relevo: leve sombra de ponto + sombra de contato verde-tinta */
+.hero-logo img {
+  width:min(100%, 600px); height:auto;
+  filter:drop-shadow(0 1.5px 0 rgba(6,77,48,0.2)) drop-shadow(0 18px 22px rgba(26,46,34,0.14));
+}
+.hero-title {
+  font-size:clamp(28px, 3.2vw, 46px); font-weight:600; letter-spacing:-0.04em; line-height:1.08;
+  color:var(--text); margin-bottom:22px; max-width:15em; text-wrap:balance;
+}
+.hero-lede { font-size:clamp(17px, 1.3vw, 19px); font-weight:300; line-height:1.72; color:var(--text); max-width:31em; margin-bottom:36px; }
+.hero-lede strong { font-weight:600; color:var(--ink); }
+.hero-actions { display:flex; flex-wrap:wrap; gap:12px; }
+.hero-sign {
+  margin-top:48px; padding-top:22px; border-top:1px solid var(--line); max-width:440px;
+  font-size:13px; color:var(--text); letter-spacing:0.2px;
+}
+.hero-sign b { color:var(--ink); font-weight:600; }
+
+.hero-visual { position:relative; display:flex; justify-content:center; align-items:center; min-height:min(660px, 76vh); }
+.broto-wrap { position:relative; }
+/* sombra de contato orgânica no chão */
+.broto-wrap::after {
+  content:''; position:absolute; bottom:-14px; left:50%; transform:translateX(-50%);
+  width:62%; height:34px; border-radius:50%;
+  background:radial-gradient(ellipse, rgba(26,46,34,0.22) 0%, transparent 72%); filter:blur(5px);
+}
+.hero-broto {
+  position:relative; z-index:1; height:min(580px, 64vh); width:auto;
+  filter:drop-shadow(0 24px 32px rgba(60,80,50,0.2));
+  animation:float 6s ease-in-out infinite;
+}
+@keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+
+/* Pequenos "mockups" flutuando ao redor do Broto */
+.chip {
+  position:absolute; z-index:2; display:flex; align-items:center; gap:12px;
+  padding:11px 18px 11px 11px; border-radius:18px; white-space:nowrap;
+  background:rgba(251,249,243,0.94); border:1px solid var(--line); box-shadow:var(--shadow-leaf);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+}
+.chip-k { font-size:12px; line-height:1.35; color:var(--text); }
+.chip-v { font-size:14px; line-height:1.35; font-weight:600; letter-spacing:-0.01em; color:var(--ink); }
+.chip-date {
+  width:44px; height:48px; border-radius:12px; flex-shrink:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1;
+  background:var(--green-deep); color:var(--paper);
+}
+.chip-date small { font-size:11px; opacity:0.75; margin-bottom:4px; }
+.chip-date b { font-size:19px; font-weight:700; letter-spacing:-0.03em; }
+.chip-icon { width:40px; height:40px; border-radius:50%; flex-shrink:0; display:grid; place-items:center; background:var(--sage); color:var(--green-dark); }
+.chip-icon.is-green { background:var(--green); color:var(--ink); }
+.chip-bar { display:flex; gap:4px; margin-top:7px; }
+.chip-bar i { width:22px; height:5px; border-radius:3px; background:var(--sage-deep); }
+.chip-bar i:first-child { background:var(--green); }
+.chip-event { top:13%; left:-2%; }
+.chip-seeds { top:67%; right:-4%; }
+.chip-invite { bottom:6%; left:2%; }
+
+/* Entrada orquestrada do hero, o único movimento automático da página */
+@media (prefers-reduced-motion:no-preference) {
+  .js .hero [data-in] {
+    opacity:0; transform:translateY(22px);
+    animation:rise .9s var(--ease-out) forwards; animation-delay:calc(var(--d, 0) * 1ms);
+  }
+  .js .hero .broto-wrap[data-in] { transform:translateY(36px) scale(0.96); animation-duration:1.2s; }
+  .js .hero .chip[data-in] { transform:translateY(12px) scale(0.92); animation-duration:.7s; }
+}
+@keyframes rise { to { opacity:1; transform:none; } }
+
+/* ---------- Como começou ---------- */
+.origin { position:relative; z-index:1; background:var(--paper-warm); padding:150px 0; }
+.origin-grid { display:grid; grid-template-columns:minmax(0,0.82fr) minmax(0,1.18fr); gap:96px; align-items:start; }
+.origin-aside { position:sticky; top:136px; }
+.origin-aside .h2 { margin-bottom:26px; }
+.beats { display:flex; flex-direction:column; gap:clamp(30px, 6vh, 64px); padding-top:8px; }
+.beat {
+  font-size:clamp(34px, 4.5vw, 64px); font-weight:600; letter-spacing:-0.046em; line-height:1.02;
+  color:var(--text); text-wrap:balance;
+}
+.beat-when { display:block; margin-bottom:12px; font-size:13px; font-weight:600; letter-spacing:0; color:var(--terracotta-ink); font-variant-numeric:tabular-nums; }
+.js .beat { color:rgba(17,44,93,0.14); transition:color .7s var(--ease-out); }
+.js .beat .beat-when { opacity:0.35; transition:opacity .7s var(--ease-out); }
+.js .beat.is-lit { color:var(--text); }
+.js .beat.is-lit .beat-when { opacity:1; }
+
+/* ---------- Instituto Semear ---------- */
+.semear { position:relative; z-index:1; padding:140px 0; background:linear-gradient(180deg, var(--sage) 0%, var(--sage-deep) 100%); }
+.semear-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:96px; align-items:start; }
+.semear .h2 { margin-bottom:28px; }
+.link-out {
+  display:inline-flex; align-items:center; gap:8px; margin-top:34px; padding-bottom:3px;
+  font-size:15px; font-weight:600; color:var(--green-dark); text-decoration:none; border-bottom:1.5px solid currentColor;
+  transition:gap .25s var(--ease-out);
+}
+.link-out:hover { gap:12px; }
+.pillars-label { font-size:13px; font-weight:500; color:var(--text); margin-bottom:14px; }
+.pillars { list-style:none; border-top:1px solid rgba(26,46,34,0.14); }
+.pillar { display:grid; grid-template-columns:52px 1fr; gap:22px; align-items:start; padding:28px 0; border-bottom:1px solid rgba(26,46,34,0.14); }
+.pillar-icon { width:52px; height:52px; border-radius:16px; display:grid; place-items:center; background:var(--paper-warm); color:var(--green-dark); box-shadow:0 10px 22px -16px rgba(26,46,34,0.4); }
+.pillar h3 { font-size:22px; font-weight:600; letter-spacing:-0.03em; line-height:1.2; margin:2px 0 6px; }
+.pillar p { font-size:15px; font-weight:300; line-height:1.68; color:var(--text); max-width:30em; }
+
+/* ---------- Casos de sucesso ---------- */
+.cases { position:relative; z-index:1; background:var(--paper); padding:150px 0 130px; }
+.split-head { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr); gap:80px; align-items:end; }
+.cases .split-head { margin-bottom:64px; }
+
+/* Carrossel contínuo: roda sozinho, flutua e aceita arrastar */
+.people-marquee {
+  position:relative; z-index:1; overflow-x:auto; padding:14px 0 40px;
+  -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-image:linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+.js .people-marquee { overflow:hidden; cursor:grab; touch-action:pan-y; -webkit-user-select:none; user-select:none; }
+.js .people-marquee.is-dragging { cursor:grabbing; }
+.people-marquee:focus-visible { outline-offset:-4px; border-radius:24px; }
+.people { list-style:none; display:flex; align-items:flex-start; gap:24px; width:max-content; padding:0 24px; will-change:transform; }
+.person { flex:0 0 clamp(220px, 21vw, 290px); }
+/* um alto, um baixo */
+.person:nth-child(even) { margin-top:64px; }
+.person-card { animation:bob 6.5s ease-in-out infinite; animation-delay:calc(var(--i, 0) * -0.9s); }
+.people-marquee.is-paused .person-card { animation-play-state:paused; }
+@keyframes bob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+.person-photo img { -webkit-user-drag:none; }
+.people-controls { display:none; align-items:center; justify-content:space-between; gap:16px; margin-top:4px; }
+.js .people-controls { display:flex; }
+.drag-hint { display:flex; align-items:center; gap:10px; font-size:13px; font-weight:500; color:var(--text); }
+.drag-hint svg { color:var(--green-dark); }
+.marquee-toggle {
+  width:42px; height:42px; border:0; border-radius:50%; cursor:pointer; flex-shrink:0;
+  display:grid; place-items:center; background:rgba(26,46,34,0.06); color:var(--ink); transition:background-color .2s;
+}
+.marquee-toggle:hover { background:rgba(26,46,34,0.11); }
+.marquee-toggle svg { grid-area:1 / 1; }
+.marquee-toggle .i-play { display:none; }
+.marquee-toggle[aria-pressed="true"] .i-play { display:block; }
+.marquee-toggle[aria-pressed="true"] .i-pause { display:none; }
+.person-photo { aspect-ratio:4 / 5; border-radius:26px; overflow:hidden; background:var(--paper-deep); margin-bottom:18px; box-shadow:var(--shadow-leaf); }
+.person-photo img { width:100%; height:100%; object-fit:cover; object-position:50% 28%; }
+.person h3 { font-size:19px; font-weight:600; letter-spacing:-0.025em; line-height:1.2; }
+.person p { font-size:14px; font-weight:400; line-height:1.45; color:var(--text); margin-top:5px; }
+
+.traits-label { margin-top:88px; font-size:13px; font-weight:500; color:var(--text); margin-bottom:0; padding-bottom:18px; }
+.traits { list-style:none; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); border-top:1px solid var(--line); }
+.trait { padding:28px 32px 0 0; }
+.trait + .trait { padding-left:32px; border-left:1px solid var(--line); }
+.trait-v { font-size:clamp(22px, 2.2vw, 30px); font-weight:600; letter-spacing:-0.04em; line-height:1.12; text-wrap:balance; }
+.trait-tag {
+  display:inline-block; margin-bottom:12px; padding:4px 10px; border-radius:999px;
+  font-size:12px; font-weight:600; color:var(--terracotta-ink); background:rgba(232,201,182,0.55);
+}
+.trait-spacer { display:block; height:34px; }
+
+/* ---------- O programa ---------- */
+.program { position:relative; z-index:1; background:var(--paper-warm); padding:150px 0; }
+.program .h2 { max-width:12em; }
+.facts { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); margin-top:76px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.fact { padding:30px 28px 32px 0; }
+.fact + .fact { padding-left:28px; border-left:1px solid var(--line); }
+.fact dt { font-size:clamp(30px, 3.1vw, 42px); font-weight:600; letter-spacing:-0.05em; line-height:1; margin-bottom:12px; }
+.fact dd { font-size:14.5px; line-height:1.5; color:var(--text); }
+
+.journey { position:relative; margin-top:96px; padding:64px 56px 60px; border-radius:36px; background:linear-gradient(180deg, var(--sage) 0%, var(--sage-deep) 100%); overflow:hidden; }
+.journey-head { display:flex; justify-content:space-between; align-items:end; gap:32px; flex-wrap:wrap; margin-bottom:56px; }
+.journey-head h3 { font-size:clamp(26px, 2.4vw, 32px); font-weight:600; letter-spacing:-0.04em; line-height:1.1; }
+.journey-head p { font-size:15px; font-weight:300; color:var(--text); max-width:26em; }
+.stages { list-style:none; position:relative; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:40px; }
+/* linha de terra ligando as três fases */
+.stages::before {
+  content:''; position:absolute; top:292px; left:12%; right:12%; height:0;
+  border-top:1.5px dashed rgba(26,46,34,0.2);
+}
+.stage { display:flex; flex-direction:column; align-items:center; text-align:center; }
+.stage-fig { position:relative; height:280px; width:100%; display:flex; align-items:flex-end; justify-content:center; margin-bottom:34px; }
+.stage-fig::after {
+  content:''; position:absolute; bottom:-8px; left:50%; transform:translateX(-50%);
+  width:52%; height:22px; border-radius:50%;
+  background:radial-gradient(ellipse, rgba(26,46,34,0.18) 0%, transparent 72%); filter:blur(4px);
+}
+.stage-fig img { position:relative; z-index:1; height:100%; width:auto; max-width:100%; object-fit:contain; filter:drop-shadow(0 16px 22px rgba(60,80,50,0.16)); }
+.stage-num { font-size:13px; font-weight:600; color:var(--terracotta-ink); margin-bottom:8px; font-variant-numeric:tabular-nums; }
+.stage h4 { font-size:25px; font-weight:600; letter-spacing:-0.8px; line-height:1.15; }
+.stage-when { font-size:14px; font-weight:600; color:var(--green-dark); margin:4px 0 12px; }
+.stage p { font-size:15px; font-weight:300; line-height:1.65; color:var(--text); max-width:280px; }
+
+/* ---------- Agenda ---------- */
+.agenda { position:relative; z-index:1; background:var(--paper); padding:150px 0; }
+.agenda .split-head { margin-bottom:64px; }
+.agenda-side .body { margin-bottom:26px; }
+.months { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:20px; }
+.month { display:flex; flex-direction:column; padding:24px 22px; border-radius:26px; background:var(--paper-warm); border:1px solid var(--line); }
+.month-top { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:18px; }
+.month-name { font-size:21px; font-weight:600; letter-spacing:-0.03em; text-transform:capitalize; }
+.month-name span { margin-left:6px; font-size:15px; font-weight:400; color:var(--text); }
+.month-tag { font-size:12px; font-weight:600; color:var(--terracotta-ink); font-variant-numeric:tabular-nums; }
+.cal { position:relative; display:grid; grid-template-columns:repeat(7, 1fr); text-align:center; font-variant-numeric:tabular-nums; }
+/* faixa que marca a coluna das quartas-feiras */
+.cal::before {
+  content:''; position:absolute; top:0; bottom:0; left:calc(100% / 7 * 3); width:calc(100% / 7);
+  border-radius:12px; background:var(--sage);
+}
+.cal > span { position:relative; z-index:1; display:grid; place-items:center; }
+.cal-h { height:30px; font-size:11px; font-weight:500; color:var(--ink-soft); }
+.cal-h.is-wed { color:var(--green-dark); font-weight:700; }
+.cal-d { height:32px; font-size:13px; color:var(--ink-soft); }
+.cal-d.is-wed { color:var(--ink); font-weight:500; }
+.cal-d.is-event b {
+  width:30px; height:30px; border-radius:50%; display:grid; place-items:center;
+  background:var(--green); color:var(--ink); font-weight:700;
+  box-shadow:0 0 0 4px rgba(0,196,104,0.18), 0 8px 16px -8px rgba(6,126,71,0.8);
+}
+.month-event { margin-top:20px; padding-top:18px; border-top:1px solid var(--line); }
+.month-title { font-size:19px; font-weight:600; letter-spacing:-0.025em; line-height:1.2; text-wrap:balance; }
+.month-event p.month-date { margin-top:5px; font-size:13.5px; color:var(--text); }
+.tbd-tag { display:inline-block; padding:3px 10px; border-radius:999px; border:1.5px dashed rgba(26,46,34,0.28); font-size:12px; font-weight:600; color:var(--ink-soft); }
+.agenda-note { margin-top:28px; font-size:14px; color:var(--text); }
+
+/* ---------- Confirmar participação (CTA principal) ---------- */
+.join {
+  position:relative; z-index:1; overflow:hidden; padding:150px 0; color:var(--paper);
+  background:
+    radial-gradient(ellipse 55% 65% at 88% 18%, rgba(0,196,104,0.24) 0%, transparent 62%),
+    linear-gradient(160deg, var(--green-deep) 0%, #0C3A26 55%, var(--ink) 100%);
+}
+.join-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:88px; align-items:center; }
+.join .eyebrow { color:var(--green-vivid); }
+.join .h2 { color:var(--paper); margin-bottom:26px; }
+.join .body { color:rgba(247,244,236,0.76); }
+.next-steps { list-style:none; margin-top:44px; border-top:1px solid rgba(247,244,236,0.14); max-width:30em; }
+.next-steps li { display:grid; grid-template-columns:34px 1fr; gap:16px; align-items:center; padding:18px 0; border-bottom:1px solid rgba(247,244,236,0.14); font-size:16px; color:rgba(247,244,236,0.88); }
+.next-steps .n { width:30px; height:30px; border-radius:50%; display:grid; place-items:center; border:1.5px solid rgba(0,232,122,0.55); font-size:13px; font-weight:600; color:var(--green-vivid); font-variant-numeric:tabular-nums; }
+
+.form-card { position:relative; padding:46px 40px 34px; border-radius:32px; background:var(--paper-warm); color:var(--ink); box-shadow:0 44px 90px -40px rgba(0,0,0,0.55); }
+.form-broto { position:absolute; z-index:2; top:-116px; right:30px; height:150px; width:auto; filter:drop-shadow(0 14px 18px rgba(0,0,0,0.25)); pointer-events:none; }
+.form-title { font-size:27px; font-weight:600; letter-spacing:-0.035em; line-height:1.15; margin-bottom:6px; }
+.form-sub { font-size:14.5px; color:var(--text); margin-bottom:28px; }
+.field { display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+.field label { font-size:14px; font-weight:500; }
+.field input, .field select {
+  height:52px; padding:0 16px; border-radius:14px; border:1.5px solid var(--line); background:#fff; font-size:16px;
+  transition:border-color .2s, box-shadow .2s;
+}
+.field input::placeholder { color:#9AA59C; }
+.field input:hover, .field select:hover { border-color:#D3CBB8; }
+.field input:focus, .field select:focus { outline:none; border-color:var(--green-dark); box-shadow:0 0 0 4px rgba(0,196,104,0.16); }
+.field-error { display:none; font-size:13px; color:var(--terracotta-ink); }
+.field.is-invalid input, .field.is-invalid select { border-color:var(--terracotta); }
+/* o select não pode crescer até a largura da opção mais longa */
+.field select { width:100%; min-width:0; text-overflow:ellipsis; }
+.field-row > .field { min-width:0; }
+.field select {
+  appearance:none; -webkit-appearance:none; padding-right:44px; cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23112C5D' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 18px center;
+}
+.field select:invalid { color:#9AA59C; }
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.field.is-invalid .field-error { display:block; }
+.check { display:grid; grid-template-columns:24px 1fr; gap:12px; align-items:start; margin:6px 0 24px; padding:16px; border-radius:16px; background:var(--sage); cursor:pointer; transition:box-shadow .2s; }
+.check input {
+  appearance:none; -webkit-appearance:none; width:22px; height:22px; margin-top:1px; border-radius:7px; cursor:pointer;
+  display:grid; place-items:center; border:1.5px solid var(--green-dark); background:#fff; transition:background-color .2s;
+}
+.check input:checked { background:var(--green-dark); }
+.check input:checked::after { content:''; width:10px; height:5px; border-left:2px solid #fff; border-bottom:2px solid #fff; transform:translateY(-1px) rotate(-45deg); }
+.check-text { font-size:14.5px; line-height:1.55; }
+.check.is-invalid { box-shadow:inset 0 0 0 1.5px var(--terracotta); }
+.check-error { display:none; grid-column:2; font-size:13px; color:var(--terracotta-ink); }
+.check.is-invalid .check-error { display:block; }
+.btn-block { width:100%; --h:56px; font-size:16px; }
+.fineprint { margin-top:14px; font-size:12.5px; line-height:1.5; color:var(--text); text-align:center; }
+.form-status { margin-top:14px; font-size:14px; color:var(--terracotta-ink); text-align:center; }
+.form-status:empty { display:none; }
+
+.success { position:relative; text-align:center; padding:4px 0 6px; }
+.success:focus { outline:none; }
+.success img { height:210px; width:auto; margin:0 auto 18px; }
+.success h3 { font-size:30px; font-weight:600; letter-spacing:-0.04em; line-height:1.1; margin-bottom:12px; }
+.success p { max-width:27em; margin:0 auto; font-size:16px; font-weight:300; line-height:1.7; color:var(--text); }
+.success p strong { font-weight:600; color:var(--ink); }
+.success .btn { margin-top:26px; }
+.preview-note { margin-top:18px !important; padding:10px 14px; border-radius:12px; background:rgba(242,169,59,0.16); font-size:13px !important; font-weight:400 !important; color:var(--ink) !important; }
+.confetti { position:absolute; z-index:3; top:32%; left:50%; width:8px; height:12px; border-radius:2px; pointer-events:none; animation:confetti 1.7s cubic-bezier(0.2,0.6,0.3,1) forwards; }
+@keyframes confetti {
+  0% { transform:translate(0,0) rotate(0deg); opacity:1; }
+  100% { transform:translate(var(--x), var(--y)) rotate(var(--r)); opacity:0; }
+}
+
+/* ---------- Rodapé ---------- */
+.footer { position:relative; z-index:1; background:var(--ink); color:var(--paper); padding:56px 0; }
+.footer-inner { display:flex; align-items:center; justify-content:space-between; gap:28px; flex-wrap:wrap; }
+.footer-brand { display:flex; align-items:center; gap:18px; }
+.footer-mascot { height:60px; width:auto; }
+.footer-logo { height:24px; width:auto; opacity:0.95; }
+.footer-sub { margin-top:8px; font-size:12.5px; color:rgba(255,255,255,0.55); }
+.footer-links { display:flex; gap:26px; flex-wrap:wrap; list-style:none; font-size:13.5px; }
+.footer-links a { color:rgba(255,255,255,0.72); text-decoration:none; }
+.footer-links a:hover { color:#fff; }
+.footer .footer-links a:focus-visible { outline-color:var(--green-vivid); }
+
+/* CTA fixo no celular */
+.dock { display:none; }
+
+/* ---------- Responsivo ---------- */
+@media (max-width:1180px) {
+  :root { --gutter:48px; }
+  .months { grid-template-columns:repeat(2, minmax(0,1fr)); }
+  .chip-seeds { right:0; }
+}
+/* botão de confirmação é mais longo: aperta os links antes de virar menu */
+@media (min-width:981px) and (max-width:1100px) {
+  .nav-links a:not(.btn) { padding:8px 10px; }
+  .nav .btn { padding:0 18px; }
+}
+@media (max-width:980px) {
+  .nav-bar { display:flex; justify-content:space-between; }
+  .nav-toggle { display:grid; }
+  .nav-links {
+    position:absolute; top:calc(100% + 8px); left:0; right:0; justify-self:stretch;
+    flex-direction:column; gap:2px; padding:8px; border-radius:26px;
+    background:rgba(251,249,243,0.98); border:1px solid var(--line); box-shadow:0 24px 48px -24px rgba(26,46,34,0.45);
+    opacity:0; visibility:hidden; transform:translateY(-6px);
+    transition:opacity .25s, transform .25s var(--ease-out), visibility 0s linear .25s;
+  }
+  .nav.is-open .nav-links { opacity:1; visibility:visible; transform:none; transition:opacity .25s, transform .25s var(--ease-out); }
+  .nav-links a:not(.btn) { padding:14px 18px; font-size:16px; border-radius:18px; }
+  .nav-links a[aria-current="true"] { background:var(--sage); box-shadow:none; }
+  .hero { min-height:auto; padding:112px 0 72px; }
+  .hero-inner { grid-template-columns:1fr; gap:24px; }
+  .hero-visual { order:-1; min-height:auto; padding:8px 0 20px; }
+  .hero-broto { height:min(420px, 52vh); }
+  .chip-event { top:6%; left:0; }
+  .chip-seeds { top:auto; bottom:22%; right:0; }
+  .chip-invite { display:none; }
+  .origin-grid, .semear-grid, .split-head, .join-grid { grid-template-columns:1fr; gap:48px; }
+  .origin-aside { position:static; }
+  .people { gap:16px; padding:0 16px; }
+  .person:nth-child(even) { margin-top:48px; }
+  .traits { grid-template-columns:1fr; }
+  .trait, .trait + .trait { padding:22px 0; border-left:0; border-bottom:1px solid var(--line); }
+  .trait-spacer { display:none; }
+  .facts { grid-template-columns:repeat(2, minmax(0,1fr)); }
+  .fact:nth-child(3) { padding-left:0; border-left:0; }
+  .fact:nth-child(n+3) { border-top:1px solid var(--line); }
+  .stages { grid-template-columns:1fr; gap:56px; }
+  .stages::before { display:none; }
+  .join-grid { gap:120px; }
+}
+@media (max-width:640px) {
+  :root { --gutter:22px; }
+  .nav { top:10px; padding:0 12px; }
+  .nav-bar { padding-left:10px; }
+  .nav-broto { height:40px; }
+  .nav-logo { height:21px; }
+  .nav-end > .btn { display:none; }
+  .nav-menu-cta { display:block; padding:8px 4px 4px; }
+  .nav-menu-cta .btn { width:100%; --h:52px; font-size:15px; }
+  .hero-logo { margin-bottom:22px; }
+  .hero-title { font-size:clamp(27px, 7.4vw, 34px); }
+  .chip { padding:9px 14px 9px 9px; gap:10px; }
+  .chip-date { width:38px; height:42px; }
+  .chip-icon { width:34px; height:34px; }
+  .chip-v { font-size:13px; }
+  .origin, .semear, .cases, .program, .agenda, .join { padding:96px 0; }
+  .traits-label { margin-top:72px; }
+  .facts { margin-top:52px; }
+  .fact, .fact + .fact { padding:22px 16px 24px 0; }
+  .fact:nth-child(2n) { padding-left:16px; }
+  .journey { margin-top:64px; padding:44px 22px 48px; border-radius:28px; }
+  .months { grid-template-columns:1fr; }
+  .form-card { padding:40px 22px 28px; border-radius:26px; }
+  .field-row { grid-template-columns:1fr; gap:0; }
+  .form-broto { height:120px; top:-92px; right:18px; }
+  .footer { padding-bottom:110px; }
+  .dock {
+    display:block; position:fixed; left:12px; right:12px; bottom:12px; z-index:60;
+    transform:translateY(160%); transition:transform .45s var(--ease-out);
+  }
+  .dock.is-visible { transform:none; }
+  .dock .btn { width:100%; --h:54px; box-shadow:0 18px 40px -14px rgba(6,77,48,0.75); }
+}
+@media (prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+  .hero-broto, .person-card { animation:none; }
+  .roll > span, .dock, .js .beat, .js .beat .beat-when, .nav-links, .nav-broto { transition:none; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#confirmar">Ir direto para a confirmação de participação</a>
+<div class="paper-grain" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <div class="nav-bar">
+    <a class="nav-brand" href="#topo" aria-label="PlantForce, voltar ao início">
+      <img class="nav-broto" src="assets/web/broto-acenando-nav.png" alt="" width="130" height="180">
+      <img class="nav-logo" src="assets/logo-plantforce-verde.png" alt="PlantForce" width="121" height="25">
+    </a>
+    <nav aria-label="Seções">
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#origem">Como começou</a></li>
+        <li><a href="#seu-mentor">Seu mentor</a></li>
+        <li><a href="#casos">Inspiração</a></li>
+        <li><a href="#programa">Programa</a></li>
+        <li><a href="#agenda">Agenda</a></li>
+        <li class="nav-menu-cta"><a class="btn btn-primary" href="#confirmar">Confirmar participação</a></li>
+      </ul>
+    </nav>
+    <div class="nav-end">
+      <a class="btn btn-primary" href="#confirmar"><span class="roll"><span data-text="Confirmar participação">Confirmar participação</span></span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu"><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="topo">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow" data-in style="--d:0">Programa de mentoria 2027</p>
+        <h1 class="hero-logo" data-in style="--d:60"><img src="assets/logo-plantforce-verde.png" alt="PlantForce" width="1847" height="382" fetchpriority="high"></h1>
+        <p class="hero-title" data-in style="--d:200">Toda semente precisa de alguém que acredite nela.</p>
+        <p class="hero-lede" data-in style="--d:300">Você está entre os <strong>16 Jovens Sementes</strong> selecionados para o PlantForce, o programa de mentoria da Salesforce. De <strong>janeiro a abril de 2027</strong>, você terá um mentor da Salesforce e workshops presenciais para se preparar para o nosso próximo processo seletivo.</p>
+        <div class="hero-actions" data-in style="--d:400">
+          <a class="btn btn-primary" href="#confirmar"><span class="roll"><span data-text="Confirmar participação">Confirmar participação</span></span></a>
+          <a class="btn btn-ghost" href="#programa"><span class="roll"><span data-text="Ver como funciona">Ver como funciona</span></span></a>
+        </div>
+        <p class="hero-sign" data-in style="--d:500"><b>Salesforce Brasil</b> &times; <b>Instituto Semear</b></p>
+      </div>
+
+      <div class="hero-visual">
+        <div class="broto-wrap" data-in style="--d:150">
+          <img class="hero-broto" src="assets/broto-acenando.png" alt="Broto, o mascote do PlantForce, acenando" width="693" height="961" fetchpriority="high">
+        </div>
+
+        <div class="chip chip-event" data-in style="--d:700" aria-hidden="true">
+          <div class="chip-date"><small>jan</small><b>27</b></div>
+          <div><div class="chip-k">Workshop presencial</div><div class="chip-v">Gerenciamento de tempo</div></div>
+        </div>
+        <div class="chip chip-seeds" data-in style="--d:860" aria-hidden="true">
+          <div class="chip-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20c0-8.5 5.6-14.3 15-15-.6 9.4-6.5 15-15 15Z"/><path d="m5 20 7.5-7.5"/></svg>
+          </div>
+          <div><div class="chip-v">Seu mentor</div><div class="chip-k">da Salesforce, só para você</div></div>
+        </div>
+        <div class="chip chip-invite" data-in style="--d:1020" aria-hidden="true">
+          <div class="chip-icon is-green">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7.5 8 5.5 8-5.5"/></svg>
+          </div>
+          <div><div class="chip-v">Seu convite chegou</div><div class="chip-bar"><i></i><i></i><i></i><i></i></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO COMEÇOU -->
+  <section class="origin" id="origem" aria-labelledby="origem-titulo">
+    <div class="wrap origin-grid">
+      <div class="origin-aside">
+        <p class="eyebrow">Como começou</p>
+        <h2 class="h2" id="origem-titulo">Uma feira que virou programa</h2>
+        <p class="body">No primeiro fim de semana de outubro de 2026, a Salesforce participou da Feira de Empregabilidade do Instituto Semear. Ali identificamos 40 jovens com a cara da Salesforce, que demonstraram muito interesse em construir carreira aqui. Neste momento, 16 deles foram selecionados para participar da mentoria, e você é um deles.</p>
+        <p class="body">O PlantForce nasce para transformar esse interesse em preparo.</p>
+      </div>
+      <div class="beats">
+        <p class="beat"><span class="beat-when">Outubro de 2026</span>Uma feira de empregabilidade.</p>
+        <p class="beat">40 jovens com a cara da Salesforce.</p>
+        <p class="beat">16 selecionados para a mentoria.</p>
+        <p class="beat">E um deles é você.</p>
+        <p class="beat"><span class="beat-when">Janeiro de 2027</span>Agora é hora de florescer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEU MENTOR -->
+  <section class="semear" id="seu-mentor" aria-labelledby="seu-mentor-titulo">
+    <div class="wrap semear-grid">
+      <div>
+        <p class="eyebrow">Seu mentor</p>
+        <h2 class="h2" id="seu-mentor-titulo">Alguém da Salesforce caminhando com você</h2>
+        <p class="body">Cada Jovem Semente do PlantForce terá um mentor: um profissional da Salesforce que topou dedicar tempo para acompanhar você de janeiro a abril de 2027.</p>
+        <p class="body">As sessões de mentoria servem para tirar dúvidas, trocar experiências e preparar você para o <strong>processo seletivo que a Salesforce vai abrir em 2027</strong>.</p>
+      </div>
+      <div>
+        <p class="pillars-label">O que esperar da mentoria</p>
+        <ul class="pillars">
+          <li class="pillar">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20.5c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
+            </div>
+            <div><h3>Um mentor só seu</h3><p>Do começo ao fim do programa, a mesma pessoa acompanha a sua evolução.</p></div>
+          </li>
+          <li class="pillar">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 0 1-12.4 7.6L3.5 21l1.4-4.4A8.5 8.5 0 1 1 20.5 12Z"/><path d="M8.5 11h7M8.5 14.5h4.5"/></svg>
+            </div>
+            <div><h3>Experiência de quem está lá dentro</h3><p>Conversas com quem vive a rotina da Salesforce todos os dias.</p></div>
+          </li>
+          <li class="pillar">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>
+            </div>
+            <div><h3>Foco no processo seletivo</h3><p>Preparo para chegar ao processo seletivo de 2027 com mais confiança.</p></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASOS DE SUCESSO -->
+  <section class="cases" id="casos" aria-labelledby="casos-titulo">
+    <div class="wrap">
+      <div class="split-head">
+        <div>
+          <p class="eyebrow">Inspiração</p>
+          <h2 class="h2" id="casos-titulo">Eles já estiveram onde você está</h2>
+        </div>
+        <p class="body">Todos vieram do Instituto Semear e hoje fazem parte do time da Salesforce. O próximo pode ser você.</p>
+      </div>
+    </div>
+
+    <div class="people-marquee" id="people-marquee" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Jovens Sementes que hoje trabalham na Salesforce">
+      <ul class="people" id="people-track">
+        <li class="person"><div class="person-card">
+          <div class="person-photo"><img src="assets/web/ElvisRocha.jpg" alt="Elvis Rocha" width="720" height="720" loading="lazy" draggable="false"></div>
+          <h3>Elvis Rocha</h3>
+          <p>Associate Technical Consultant Intern</p>
+        </div></li>
+        <li class="person"><div class="person-card">
+          <div class="person-photo"><img src="assets/web/FernandoOliveira.jpg" alt="Fernando Oliveira" width="720" height="720" loading="lazy" draggable="false"></div>
+          <h3>Fernando Oliveira</h3>
+          <p>Associate Technical Consultant Intern</p>
+        </div></li>
+        <li class="person"><div class="person-card">
+          <div class="person-photo"><img src="assets/web/RenataAlencar.jpg" alt="Renata Alencar" width="720" height="720" loading="lazy" draggable="false"></div>
+          <h3>Renata Alencar</h3>
+          <p>Junior Associate Technical Consultant</p>
+        </div></li>
+        <li class="person"><div class="person-card">
+          <div class="person-photo"><img src="assets/web/SayaneLima.jpg" alt="Sayane Lima" width="720" height="720" loading="lazy" draggable="false"></div>
+          <h3>Sayane Lima</h3>
+          <p>Business Development Rep</p>
+        </div></li>
+        <li class="person"><div class="person-card">
+          <div class="person-photo"><img src="assets/web/GuilhermeDeLuca.jpg" alt="Guilherme de Luca" width="720" height="720" loading="lazy" draggable="false"></div>
+          <h3>Guilherme de Luca</h3>
+          <p>Junior Associate Technical Consultant</p>
+        </div></li>
+        <li class="person"><div class="person-card">
+          <div class="person-photo"><img src="assets/web/FernandaMaronato.jpg" alt="Fernanda Maronato" width="512" height="512" loading="lazy" draggable="false"></div>
+          <h3>Fernanda Maronato</h3>
+          <p>Software Engineering AMTS</p>
+        </div></li>
+        <li class="person"><div class="person-card">
+          <div class="person-photo"><img src="assets/web/GeovanaVasconcelos.jpg" alt="Geovana Vasconcelos" width="720" height="720" loading="lazy" draggable="false"></div>
+          <h3>Geovana Vasconcelos</h3>
+          <p>Sales Development Representative</p>
+        </div></li>
+      </ul>
+    </div>
+
+    <div class="wrap">
+      <div class="people-controls">
+        <p class="drag-hint">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8 4 12l4 4M16 8l4 4-4 4M4 12h16"/></svg>
+          Arraste para os lados para ver todos
+        </p>
+        <button class="marquee-toggle" id="marquee-toggle" type="button" aria-pressed="false" aria-controls="people-marquee" aria-label="Pausar o carrossel">
+          <svg class="i-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>
+          <svg class="i-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.2-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>
+        </button>
+      </div>
+
+      <p class="traits-label">O que eles têm em comum</p>
+      <ul class="traits">
+        <li class="trait"><span class="trait-spacer" aria-hidden="true"></span><p class="trait-v">Comunicação clara</p></li>
+        <li class="trait"><span class="trait-spacer" aria-hidden="true"></span><p class="trait-v">Habilidade para resolver problemas</p></li>
+        <li class="trait"><span class="trait-tag">Principalmente</span><p class="trait-v">A qualidade do trabalho que entregam</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- O PROGRAMA -->
+  <section class="program" id="programa" aria-labelledby="programa-titulo">
+    <div class="wrap">
+      <div class="split-head">
+        <div>
+          <p class="eyebrow">O programa</p>
+          <h2 class="h2" id="programa-titulo">Quatro meses de preparo para o processo seletivo de 2027</h2>
+        </div>
+        <div>
+          <p class="body">Durante todo o programa, você terá <strong>um mentor da Salesforce</strong> ao seu lado.</p>
+          <p class="body">As sessões de mentoria e os workshops presenciais vão preparar você para o processo seletivo que a Salesforce vai abrir em 2027.</p>
+        </div>
+      </div>
+
+      <dl class="facts">
+        <div class="fact"><dt>4 meses</dt><dd>de janeiro a abril de 2027</dd></div>
+        <div class="fact"><dt>1 mentor</dt><dd>só para você</dd></div>
+        <div class="fact"><dt>4 workshops</dt><dd>presenciais, um por mês</dd></div>
+        <div class="fact"><dt>1 objetivo</dt><dd>o processo seletivo de 2027</dd></div>
+      </dl>
+
+      <div class="journey">
+        <div class="journey-head">
+          <h3>A sua jornada</h3>
+          <p>Como o Broto, você vai crescer em três momentos ao longo do programa.</p>
+        </div>
+        <ol class="stages">
+          <li class="stage">
+            <div class="stage-fig"><img src="assets/broto-curioso.png" alt="Broto curioso" width="763" height="973" loading="lazy"></div>
+            <div class="stage-num">01</div>
+            <h4>Curioso</h4>
+            <div class="stage-when">Janeiro</div>
+            <p>Conhecer seu mentor, entender o programa, organizar a rotina e já iniciar as primeiras trilhas.</p>
+          </li>
+          <li class="stage">
+            <div class="stage-fig"><img src="assets/broto-determinado.png" alt="Broto determinado" width="679" height="978" loading="lazy"></div>
+            <div class="stage-num">02</div>
+            <h4>Determinado</h4>
+            <div class="stage-when">Fevereiro e março</div>
+            <p>Mão na massa: construir slides e pitches que comunicam suas ideias com clareza.</p>
+          </li>
+          <li class="stage">
+            <div class="stage-fig"><img src="assets/broto-celebrando.png" alt="Broto celebrando" width="1271" height="1080" loading="lazy"></div>
+            <div class="stage-num">03</div>
+            <h4>Celebrando</h4>
+            <div class="stage-when">Abril</div>
+            <p>Hora de colher o que você plantou e chegar com mais preparo ao processo seletivo.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGENDA -->
+  <section class="agenda" id="agenda" aria-labelledby="agenda-titulo">
+    <div class="wrap">
+      <div class="split-head">
+        <div>
+          <p class="eyebrow">Workshops presenciais</p>
+          <h2 class="h2" id="agenda-titulo">Sempre na última quarta-feira do mês</h2>
+        </div>
+        <div class="agenda-side">
+          <p class="body">Uma vez por mês, um workshop presencial com temas focados no seu desenvolvimento profissional. Reserve essas datas.</p>
+          <button class="btn btn-ghost" type="button" data-ics>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+            <span class="roll"><span data-text="Salvar as datas na agenda">Salvar as datas na agenda</span></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="months" id="months"><!-- preenchido pelo script --></div>
+      <p class="agenda-note">Horário e local serão enviados por e-mail a quem confirmar a participação.</p>
+    </div>
+  </section>
+
+  <!-- CONFIRMAR PARTICIPAÇÃO -->
+  <section class="join" id="confirmar" aria-labelledby="confirmar-titulo">
+    <div class="wrap join-grid">
+      <div>
+        <p class="eyebrow">Sua vaga</p>
+        <h2 class="h2" id="confirmar-titulo">Falta só você confirmar.</h2>
+        <p class="body">Para garantir sua vaga no PlantForce, preencha seus dados e confirme sua participação de janeiro a abril de 2027.</p>
+        <ol class="next-steps">
+          <li><span class="n">1</span>Você confirma sua participação aqui.</li>
+          <li><span class="n">2</span>A equipe PlantForce entra em contato com os próximos passos.</li>
+          <li><span class="n">3</span>Em janeiro, você conhece o seu mentor.</li>
+        </ol>
+      </div>
+
+      <div class="form-card" id="form-card">
+        <img class="form-broto" id="form-broto" src="assets/broto-determinado.png" alt="" width="679" height="978" loading="lazy">
+
+        <form id="confirm-form" novalidate>
+          <h3 class="form-title">Confirmar participação</h3>
+          <p class="form-sub">Leva menos de um minuto.</p>
+
+          <div class="field">
+            <label for="f-nome">Nome completo</label>
+            <input id="f-nome" name="nome" type="text" autocomplete="name" maxlength="120" required aria-describedby="e-nome">
+            <span class="field-error" id="e-nome">Informe seu nome completo.</span>
+          </div>
+          <div class="field">
+            <label for="f-email">E-mail</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="voce@email.com" required aria-describedby="e-email">
+            <span class="field-error" id="e-email">Informe um e-mail válido, como voce@email.com.</span>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-curso">Curso</label>
+              <input id="f-curso" name="curso" type="text" maxlength="120" placeholder="Ex.: Administração" required aria-describedby="e-curso">
+              <span class="field-error" id="e-curso">Informe seu curso.</span>
+            </div>
+            <div class="field">
+              <label for="f-instituicao">Instituição de ensino</label>
+              <input id="f-instituicao" name="instituicao" type="text" autocomplete="organization" maxlength="120" placeholder="Ex.: USP" required aria-describedby="e-instituicao">
+              <span class="field-error" id="e-instituicao">Informe sua instituição de ensino.</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-area">Área que mais te interessa na Salesforce</label>
+            <select id="f-area" name="area" required aria-describedby="e-area">
+              <option value="" disabled selected>Escolha uma opção</option>
+              <option value="consultoria">Consultoria técnica</option>
+              <option value="vendas">Vendas e relacionamento com clientes</option>
+              <option value="engenharia">Engenharia de software</option>
+              <option value="descobrindo">Ainda estou descobrindo</option>
+            </select>
+            <span class="field-error" id="e-area">Escolha uma área, ou "Ainda estou descobrindo".</span>
+          </div>
+
+          <label class="check" id="check">
+            <input type="checkbox" name="confirmacao" required aria-describedby="e-confirmacao">
+            <span class="check-text">Confirmo minha participação no PlantForce, de janeiro a abril de 2027, incluindo os workshops presenciais na última quarta-feira de cada mês.</span>
+            <span class="check-error" id="e-confirmacao">Marque a confirmação para continuar.</span>
+          </label>
+
+          <button class="btn btn-primary btn-block" type="submit" id="submit-btn"><span class="roll"><span data-text="Confirmar participação">Confirmar participação</span></span></button>
+          <p class="form-status" id="form-status" role="alert"></p>
+          <p class="fineprint">Seus dados serão usados apenas pela equipe PlantForce para organizar o programa.</p>
+        </form>
+
+        <div class="success" id="success" tabindex="-1" hidden>
+          <img src="assets/broto-celebrando.png" alt="Broto celebrando" width="1271" height="1080">
+          <h3 id="success-title">Participação confirmada!</h3>
+          <p id="success-text"></p>
+          <button class="btn btn-ghost" type="button" data-ics>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+            <span class="roll"><span data-text="Salvar as datas na agenda">Salvar as datas na agenda</span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <img class="footer-mascot" src="assets/broto-acenando.png" alt="" width="693" height="961" loading="lazy">
+      <div>
+        <img class="footer-logo" src="assets/logo-plantforce-branca.png" alt="PlantForce" width="116" height="24" loading="lazy">
+        <div class="footer-sub">Salesforce Brasil &times; Instituto Semear, 2026</div>
+      </div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="https://www.isemear.org.br/" target="_blank" rel="noopener">Instituto Semear</a></li>
+      <li><a href="#confirmar">Confirmar participação</a></li>
+      <li><a href="#topo">Voltar ao topo</a></li>
+    </ul>
+  </div>
+</footer>
+
+<div class="dock" id="dock">
+  <a class="btn btn-primary" href="#confirmar"><span class="roll"><span data-text="Confirmar participação">Confirmar participação</span></span></a>
+</div>
+
+<script>
+/* =========================================================================
+   Supabase: preencha com a URL do projeto e a chave pública (anon/publishable).
+   A tabela public.mentorados é criada por supabase/migrations/*_create_mentorados.sql
+   e só aceita INSERT pela chave pública (RLS), então é seguro expor a chave aqui.
+   ========================================================================= */
+const SUPABASE_URL = 'https://vmjqckcfridurimtzwkk.supabase.co'; // projeto PlantForce
+const SUPABASE_ANON_KEY = 'sb_publishable_DOK7to9zo0gKhvM-BvtHfA_omBAg9CE'; // chave pública (publishable)
+const SUPABASE_TABLE = 'mentorados';
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- Workshops: sempre na última quarta-feira do mês ---------- */
+const WORKSHOPS = [
+  { year:2027, month:0, title:'Gerenciamento de tempo' },
+  { year:2027, month:1, title:'Criação de slides' },
+  { year:2027, month:2, title:'Criação de pitches' },
+  { year:2027, month:3, title:null },
+];
+const MONTH_NAMES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const WEEKDAYS = ['D','S','T','Q','Q','S','S'];
+const WED = 3;
+
+function lastWednesday(year, month) {
+  const last = new Date(year, month + 1, 0);
+  return last.getDate() - ((last.getDay() - WED + 7) % 7);
+}
+
+function renderCalendars() {
+  const host = document.getElementById('months');
+  WORKSHOPS.forEach((w, i) => {
+    const day = lastWednesday(w.year, w.month);
+    const first = new Date(w.year, w.month, 1).getDay();
+    const days = new Date(w.year, w.month + 1, 0).getDate();
+    const name = MONTH_NAMES[w.month];
+
+    let cells = WEEKDAYS.map((d, idx) => `<span class="cal-h${idx === WED ? ' is-wed' : ''}">${d}</span>`).join('');
+    for (let c = 0; c < 42; c++) {
+      const d = c - first + 1;
+      const col = c % 7;
+      if (d < 1 || d > days) { cells += '<span class="cal-d"></span>'; continue; }
+      const cls = ['cal-d'];
+      if (col === WED) cls.push('is-wed');
+      if (d === day) cls.push('is-event');
+      cells += `<span class="${cls.join(' ')}">${d === day ? `<b>${d}</b>` : d}</span>`;
+    }
+
+    const card = document.createElement('article');
+    card.className = 'month' + (w.title ? '' : ' is-tbd');
+    card.innerHTML = `
+      <div class="month-top">
+        <h3 class="month-name">${name}<span>${w.year}</span></h3>
+        <span class="month-tag">Workshop ${String(i + 1).padStart(2, '0')}</span>
+      </div>
+      <div class="cal" aria-hidden="true">${cells}</div>
+      <div class="month-event">
+        ${w.title ? `<p class="month-title">${w.title}</p>` : '<span class="tbd-tag">Tema a definir</span>'}
+        <p class="month-date">Quarta-feira, ${day} de ${name}</p>
+      </div>`;
+    host.appendChild(card);
+  });
+}
+renderCalendars();
+
+/* ---------- Arquivo .ics com as quatro datas ---------- */
+function icsEscape(s) { return s.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n'); }
+function ymd(d) { return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`; }
+
+function downloadIcs() {
+  const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  const lines = [
+    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//PlantForce//Workshops 2027//PT-BR',
+    'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:PlantForce – Workshops 2027',
+  ];
+  WORKSHOPS.forEach(w => {
+    const start = new Date(w.year, w.month, lastWednesday(w.year, w.month));
+    const end = new Date(start); end.setDate(end.getDate() + 1);
+    lines.push(
+      'BEGIN:VEVENT',
+      `UID:plantforce-workshop-${ymd(start)}@plantforce`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${ymd(start)}`,
+      `DTEND;VALUE=DATE:${ymd(end)}`,
+      `SUMMARY:${icsEscape(`PlantForce – Workshop: ${w.title || 'tema a definir'}`)}`,
+      `DESCRIPTION:${icsEscape('Workshop presencial do programa de mentoria PlantForce (Salesforce × Instituto Semear). Horário e local serão enviados por e-mail a quem confirmar a participação.')}`,
+      'TRANSP:TRANSPARENT',
+      'END:VEVENT'
+    );
+  });
+  lines.push('END:VCALENDAR');
+  const blob = new Blob([lines.join('\r\n')], { type:'text/calendar;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'plantforce-workshops-2027.ics';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+document.querySelectorAll('[data-ics]').forEach(b => b.addEventListener('click', downloadIcs));
+
+/* ---------- Navegação e CTA fixo no celular ---------- */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 24);
+onScroll();
+window.addEventListener('scroll', onScroll, { passive:true });
+
+// Menu do celular
+const navToggle = nav.querySelector('.nav-toggle');
+function setMenu(open) {
+  nav.classList.toggle('is-open', open);
+  navToggle.setAttribute('aria-expanded', String(open));
+  navToggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+}
+navToggle.addEventListener('click', () => setMenu(!nav.classList.contains('is-open')));
+nav.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && nav.classList.contains('is-open')) { setMenu(false); navToggle.focus(); }
+});
+document.addEventListener('click', e => { if (!nav.contains(e.target)) setMenu(false); });
+
+// Destaca na navbar a seção que está no meio da tela
+const navLinks = new Map([...nav.querySelectorAll('.nav-links a[href^="#"]:not(.btn)')].map(a => [a.getAttribute('href').slice(1), a]));
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    navLinks.forEach(a => a.removeAttribute('aria-current'));
+    const link = navLinks.get(e.target.id);
+    if (link) link.setAttribute('aria-current', 'true');
+  });
+}, { rootMargin:'-45% 0px -54% 0px' });
+document.querySelectorAll('main > section[id]').forEach(sec => spy.observe(sec));
+
+const dock = document.getElementById('dock');
+const dockState = { heroVisible:true, joinVisible:false };
+new IntersectionObserver(entries => {
+  entries.forEach(e => { dockState[e.target.id === 'topo' ? 'heroVisible' : 'joinVisible'] = e.isIntersecting; });
+  dock.classList.toggle('is-visible', !dockState.heroVisible && !dockState.joinVisible);
+}).observe(document.getElementById('topo'));
+new IntersectionObserver(entries => {
+  entries.forEach(e => { dockState.joinVisible = e.isIntersecting; });
+  dock.classList.toggle('is-visible', !dockState.heroVisible && !dockState.joinVisible);
+}).observe(document.getElementById('confirmar'));
+
+/* ---------- Frases da origem acendem conforme a leitura ---------- */
+const beats = document.querySelectorAll('.beat');
+if (reduceMotion || !('IntersectionObserver' in window)) {
+  beats.forEach(b => b.classList.add('is-lit'));
+} else {
+  const beatObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('is-lit'); beatObserver.unobserve(e.target); }
+    });
+  }, { rootMargin:'0px 0px -38% 0px' });
+  beats.forEach(b => beatObserver.observe(b));
+}
+
+/* ---------- Carrossel dos casos de sucesso: roda sozinho, flutua e aceita arrastar ---------- */
+(function peopleMarquee() {
+  const viewport = document.getElementById('people-marquee');
+  const track = document.getElementById('people-track');
+  const toggle = document.getElementById('marquee-toggle');
+  const SPEED = 30; // px por segundo
+
+  const originals = [...track.children];
+  const cloneOf = el => { const c = el.cloneNode(true); c.setAttribute('aria-hidden', 'true'); return c; };
+  // A sequência que se repete precisa ter um número par de cards para o alto/baixo não quebrar na emenda
+  const base = originals.length % 2 ? [...originals, ...originals.map(cloneOf)] : [...originals];
+  base.slice(originals.length).forEach(c => track.appendChild(c));
+  const baseLen = base.length;
+  for (let k = 0; k < 2; k++) base.forEach(el => track.appendChild(cloneOf(el)));
+  [...track.children].forEach((el, i) => el.style.setProperty('--i', i));
+
+  let unitW = 1, x = 0, v = 0, last = 0, raf = 0, inView = false;
+  let dragging = false, hovering = false, paused = reduceMotion;
+  let startX = 0, startPos = 0, lastX = 0, lastT = 0, dragV = 0;
+
+  const measure = () => { unitW = track.children[baseLen].offsetLeft - track.children[0].offsetLeft || 1; };
+  const render = () => {
+    x = ((x % unitW) + unitW) % unitW;
+    track.style.transform = `translate3d(${-x}px, 0, 0)`;
+  };
+  const frame = now => {
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    if (!dragging) {
+      const target = paused || hovering ? 0 : SPEED;
+      v += (target - v) * (1 - Math.exp(-dt * 2.4)); // inércia que volta suavemente à velocidade normal
+      x += v * dt;
+    }
+    render();
+    raf = requestAnimationFrame(frame);
+  };
+  const start = () => { if (!raf && inView && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+  const stop = () => { cancelAnimationFrame(raf); raf = 0; };
+
+  // Começa com o primeiro card alinhado à margem do título
+  measure();
+  const wrap = document.querySelector('#casos .wrap');
+  x = viewport.getBoundingClientRect().left - wrap.getBoundingClientRect().left - parseFloat(getComputedStyle(wrap).paddingLeft) + parseFloat(getComputedStyle(track).paddingLeft);
+  v = paused ? 0 : SPEED;
+  render();
+
+  window.addEventListener('resize', () => { const r = x / unitW; measure(); x = r * unitW; render(); });
+  new IntersectionObserver(([e]) => { inView = e.isIntersecting; inView ? start() : stop(); }).observe(viewport);
+  document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+
+  // Arrastar com mouse ou dedo (rolagem vertical da página continua livre)
+  viewport.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    dragging = true; dragV = 0;
+    startX = lastX = e.clientX; startPos = x; lastT = performance.now();
+    viewport.setPointerCapture(e.pointerId);
+    viewport.classList.add('is-dragging');
+  });
+  viewport.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const now = performance.now();
+    const instant = -(e.clientX - lastX) / Math.max(0.008, (now - lastT) / 1000);
+    dragV = dragV * 0.3 + instant * 0.7;
+    lastX = e.clientX; lastT = now;
+    x = startPos - (e.clientX - startX);
+    render();
+  });
+  const endDrag = () => {
+    if (!dragging) return;
+    dragging = false;
+    viewport.classList.remove('is-dragging');
+    v = performance.now() - lastT > 90 ? 0 : Math.max(-2400, Math.min(2400, dragV));
+  };
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => viewport.addEventListener(t, endDrag));
+
+  // Para enquanto o mouse está em cima, para dar tempo de ler
+  viewport.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') hovering = true; });
+  viewport.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') hovering = false; });
+
+  // Setas do teclado empurram um card para o lado
+  viewport.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    v = (e.key === 'ArrowRight' ? 1 : -1) * 900;
+  });
+
+  const syncToggle = () => {
+    toggle.setAttribute('aria-pressed', String(paused));
+    toggle.setAttribute('aria-label', paused ? 'Retomar o carrossel' : 'Pausar o carrossel');
+    viewport.classList.toggle('is-paused', paused);
+  };
+  toggle.addEventListener('click', () => { paused = !paused; syncToggle(); });
+  syncToggle();
+})();
+
+/* ---------- Formulário de confirmação de participação ---------- */
+const form = document.getElementById('confirm-form');
+const submitBtn = document.getElementById('submit-btn');
+const statusEl = document.getElementById('form-status');
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+function setButtonLabel(btn, text) {
+  const inner = btn.querySelector('.roll > span');
+  inner.textContent = text;
+  inner.dataset.text = text;
+}
+
+function validate() {
+  const data = {
+    nome: form.nome.value.trim().replace(/\s+/g, ' '),
+    email: form.email.value.trim(),
+    curso: form.curso.value.trim().replace(/\s+/g, ' '),
+    instituicao: form.instituicao.value.trim().replace(/\s+/g, ' '),
+    area: form.area.value,
+    confirmacao: form.confirmacao.checked,
+  };
+  const checks = [
+    [form.nome, data.nome.length >= 2],
+    [form.email, EMAIL_RE.test(data.email)],
+    [form.curso, data.curso.length >= 2],
+    [form.instituicao, data.instituicao.length >= 2],
+    [form.area, data.area !== ''],
+  ];
+  let firstInvalid = null;
+  checks.forEach(([input, ok]) => {
+    input.closest('.field').classList.toggle('is-invalid', !ok);
+    input.setAttribute('aria-invalid', String(!ok));
+    if (!ok && !firstInvalid) firstInvalid = input;
+  });
+  document.getElementById('check').classList.toggle('is-invalid', !data.confirmacao);
+  form.confirmacao.setAttribute('aria-invalid', String(!data.confirmacao));
+  if (!data.confirmacao && !firstInvalid) firstInvalid = form.confirmacao;
+  return { data, firstInvalid };
+}
+
+// Limpa o erro do campo assim que a pessoa corrige
+form.addEventListener('input', e => {
+  const field = e.target.closest('.field');
+  if (field && field.classList.contains('is-invalid')) {
+    const v = e.target.value.trim();
+    const ok = e.target.type === 'email' ? EMAIL_RE.test(v) : v.length >= 2;
+    if (ok) { field.classList.remove('is-invalid'); e.target.setAttribute('aria-invalid', 'false'); }
+  }
+});
+form.confirmacao.addEventListener('change', () => {
+  if (form.confirmacao.checked) document.getElementById('check').classList.remove('is-invalid');
+});
+
+async function saveConfirmation({ nome, email, curso, instituicao, area }) {
+  const headers = {
+    'apikey': SUPABASE_ANON_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=minimal',
+  };
+  // Chaves anon antigas são JWT; as novas (sb_publishable_…) vão apenas no header apikey
+  if (SUPABASE_ANON_KEY.startsWith('eyJ')) headers.Authorization = `Bearer ${SUPABASE_ANON_KEY}`;
+  const res = await fetch(`${SUPABASE_URL.replace(/\/$/, '')}/rest/v1/${SUPABASE_TABLE}`, {
+    method:'POST', headers,
+    body: JSON.stringify({ nome, email: email.toLowerCase(), curso, instituicao, area_interesse: area, confirmacao_participacao:true }),
+  });
+  if (res.ok) return 'created';
+  if (res.status === 409) return 'duplicate';
+  throw new Error(`Supabase respondeu ${res.status}`);
+}
+
+function burstConfetti(host) {
+  if (reduceMotion) return;
+  const colors = ['#00C468', '#00E87A', '#00A1E0', '#F2A93B', '#E8C9B6', '#067E47'];
+  for (let i = 0; i < 38; i++) {
+    const p = document.createElement('i');
+    p.className = 'confetti';
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 120 + Math.random() * 200;
+    p.style.setProperty('--x', `${Math.cos(angle) * dist}px`);
+    p.style.setProperty('--y', `${Math.sin(angle) * dist * 0.8 + 140}px`);
+    p.style.setProperty('--r', `${Math.random() * 720 - 360}deg`);
+    p.style.background = colors[i % colors.length];
+    p.style.animationDelay = `${Math.random() * 120}ms`;
+    host.appendChild(p);
+    setTimeout(() => p.remove(), 2000);
+  }
+}
+
+function showSuccess(kind, data) {
+  const firstName = data.nome.split(/\s+/)[0];
+  const title = document.getElementById('success-title');
+  const text = document.getElementById('success-text');
+  if (kind === 'duplicate') {
+    title.textContent = 'Você já confirmou';
+    text.innerHTML = `Este e-mail já confirmou a participação no PlantForce, ${escapeHtml(firstName)}. A equipe vai entrar em contato com os próximos passos.`;
+  } else {
+    title.textContent = 'Participação confirmada!';
+    text.innerHTML = `Que bom ter você, ${escapeHtml(firstName)}! A equipe PlantForce vai escrever para <strong>${escapeHtml(data.email)}</strong> com os próximos passos. Nos vemos em janeiro.`;
+  }
+  if (kind === 'preview') {
+    text.insertAdjacentHTML('afterend', '<p class="preview-note">Modo de pré-visualização: o Supabase ainda não foi configurado neste arquivo, então nada foi salvo.</p>');
+  }
+  form.hidden = true;
+  document.getElementById('form-broto').hidden = true;
+  const success = document.getElementById('success');
+  success.hidden = false;
+  success.focus();
+  burstConfetti(document.getElementById('form-card'));
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  statusEl.textContent = '';
+  const { data, firstInvalid } = validate();
+  if (firstInvalid) { firstInvalid.focus(); return; }
+
+  submitBtn.disabled = true;
+  setButtonLabel(submitBtn, 'Enviando…');
+
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    console.warn('[PlantForce] Supabase não configurado: preencha SUPABASE_URL e SUPABASE_ANON_KEY no index.html.');
+    showSuccess('preview', data);
+    return;
+  }
+  try {
+    const result = await saveConfirmation(data);
+    showSuccess(result, data);
+  } catch (err) {
+    console.error('[PlantForce]', err);
+    statusEl.textContent = 'Não foi possível enviar agora. Verifique sua conexão e tente de novo.';
+    submitBtn.disabled = false;
+    setButtonLabel(submitBtn, 'Confirmar participação');
+  }
+});
+</script>
+</body>
+</html>
